@@ -1,0 +1,193 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>The ONE智能钢琴</title>
+    <link rel="stylesheet" href="https://qn-ios.xiaoyezi.com/css/reset.css?v=20180131">
+    <link rel="stylesheet" href="https://qn-ios.xiaoyezi.com/css/style.css?v=20180131">
+</head>
+<script type = "text/javascript">
+    (function() {
+        window.zhuge = window.zhuge || [];
+        window.zhuge.methods = "_init identify track getDid getSid getKey setSuperProperty setUserProperties setPlatform".split(" ");
+        window.zhuge.factory = function(b) {
+            return function() {
+                var a = Array.prototype.slice.call(arguments);
+                a.unshift(b);
+                window.zhuge.push(a);
+                return window.zhuge;
+            }
+        };
+        for (var i = 0; i < window.zhuge.methods.length; i++) {
+            var key = window.zhuge.methods[i];
+            window.zhuge[key] = window.zhuge.factory(key);
+        }
+        window.zhuge.load = function(b, x) {
+            if (!document.getElementById("zhuge-js")) {
+                var a = document.createElement("script");
+                var verDate = new Date();
+                var verStr = verDate.getFullYear().toString() + verDate.getMonth().toString() + verDate.getDate().toString();
+
+                a.type = "text/javascript";
+                a.id = "zhuge-js";
+                a.async = !0;
+                a.src = (location.protocol == 'http:' ? "http://sdk.zhugeio.com/zhuge.min.js?v=": 'https://zgsdk.zhugeio.com/zhuge.min.js?v=') + verStr;
+                a.onerror = function() {
+                    window.zhuge.identify = window.zhuge.track = function(ename, props, callback) {
+                         if(callback && Object.prototype.toString.call(callback) === '[object Function]') {
+                    callback();
+                                } else if (Object.prototype.toString.call(props) === '[object Function]') {
+                    props();
+                            }
+                    };
+                };
+                var c = document.getElementsByTagName("script")[0];
+                c.parentNode.insertBefore(a, c);
+                window.zhuge._init(b, x)
+            }
+        };
+        window.zhuge.load('99944c90bdfe483ab3596e7f99f20c2e', {
+            superProperty: { //全局的事件属性(选填)
+                '应用名称': 'The ONE智能钢琴（新）'
+            },
+            autoTrack: false,
+            //启用全埋点采集（选填，默认false）
+            singlePage: false //是否是单页面应用（SPA），启用autoTrack后生效（选填，默认false）
+        });
+    })();
+</script>
+<script>
+    document.documentElement.style.fontSize = window.innerWidth / 7.5 + 'px';
+    window.onresize = function (e) {
+        document.documentElement.style.fontSize = document.documentElement.offsetWidth / 7.5 + 'px';
+    }
+</script>
+<body>
+    <div class="main" align="center">
+    </div>
+    <script type="text/template" id="theone-client-android">
+        <div class="main-img">
+            <img src="https://qn-ios.xiaoyezi.com/images/girl@2x.png" alt="">
+        </div>
+        <p class="main-p">请点击右上角 “...”</p>
+        <p class="main-p">选择在本地<span> “浏览器” </span>中打开,</p>
+        <p class="main-p">直接跳转到APP</p>
+        <p class="main-up">若未安装The ONE智能钢琴，可点击下载按钮</p>
+        <a class="main-bottom" href="http://www.1tai.com/download-smartpiano.html">
+            下载更新
+        </a>
+    </script>
+    <script type="text/template" id="theone-client-ios">
+        <div class="main-img">
+          <img src="https://qn-ios.xiaoyezi.com/images/girl@2x.png" alt="">
+        </div>
+        <p class="main-p">请点击右上角 “...”</p>
+        <p class="main-p">选择<span id="p-device"> “在Safari中打开” </span>,</p>
+        <p class="main-p">直接跳转到APP</p>
+        <p class="main-up">若未安装The ONE智能钢琴，可点击下载按钮</p>
+        <a class="main-bottom" href="http://www.1tai.com/download-smartpiano.html">
+            下载更新
+        </a>
+    </script>
+    <script type="text/template" id="theone-download">
+        <div class="content">
+            <div class="logo">
+                <img src="https://qn-ios.xiaoyezi.com/images/11n.png" alt="">
+            </div>
+        </div>
+
+        <div class="android-bottom">
+            <div class="bottom-img">
+                <img src="https://qn-ios.xiaoyezi.com/images/logo.png" alt="">
+            </div>
+            <a href="http://www.1tai.com/download-smartpiano.html" class="bottom-download">下载</a>
+            <!-- <a href="href="javascript:openApp();"" id="btn"><span class="bottom-open">打开</span></a> -->
+        </div>
+    </script>
+    <script type="text/javascript">
+        (function() {
+            var main = document.querySelector('.main')
+            var tDownload = document.querySelector('#theone-download').innerHTML
+            var ua = window.navigator.userAgent.toLocaleLowerCase()
+            var isAndroid = /android/.test(ua)
+            var isIOS = /ipad|iphone|ipod/.test(ua)
+            var tClient = isAndroid ? document.querySelector('#theone-client-android').innerHTML : document.querySelector('#theone-client-ios').innerHTML
+            // 匹配qq，不匹配qqbrowser
+            var showTip = /micromessenger|weibo|qq(?!browser)/.test(ua)
+
+            function openApp() {
+                var url = 'smartpiano' + window.location.href.substr(5)
+                window.location.href = url
+            }
+
+            var  createIframe=(function(){
+                var iframe
+                return function(){
+                    if(iframe){
+                        return iframe
+                    }else{
+                        iframe = document.createElement('iframe')
+                        iframe.style.display = 'none'
+                        document.body.appendChild(iframe)
+                        return iframe
+                    }
+                }
+            })()
+            var openIframe = createIframe();
+            var url = 'smartpiano' + window.location.href.substr(5)
+            console.log(openIframe)
+            console.log(url)
+            if (isAndroid && !showTip) {
+                openIframe.src = url
+                setTimeout(function() {
+                    window.location.href = 'http://www.1tai.com/download-smartpiano.html'
+                }, 2000)
+                return
+            }
+            setTimeout(function() {
+
+                main.innerHTML = showTip ? tClient : tDownload
+            }, 0)
+
+        })();
+    </script>
+    <script>
+        function formatUrl(url) {
+            var param = {}
+            var search = url.split('?')
+            var ret = search[1].split('&')
+            ret.forEach(function(item) {
+                var temp = item.split('=');
+                var key = decodeURIComponent(temp[0]);
+                var val = decodeURIComponent(temp[1]);
+                param[key] = val
+            })
+            var fun = function(obj) {
+                for (var k in obj) {
+                    if (/\%/.test(obj[k])) {
+                        obj[k] = decodeURIComponent(obj[k])
+                        fun(obj)
+                    }
+                }
+                return obj
+            }
+            return fun(param)
+        }
+
+        var url = window.location.href
+        var result = formatUrl(url)
+        console.log(result)
+        zhuge.track('跳转回APP', {
+            '是否支持88键': (result.only_support_88 === 1 ? '是' : '否'),
+            '曲谱名称': result.name,
+            '曲谱等级': result.level,
+            'MD5': result.hash,
+            '资源地址': result.url
+        })
+    </script>
+</body>
+
+</html>
